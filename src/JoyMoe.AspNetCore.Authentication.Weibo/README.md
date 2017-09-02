@@ -12,12 +12,14 @@
 ### Startup.cs
 
 ```c#
-public void Configure(IApplicationBuilder app){
-    app.UseWeiboAuthentication(new WeiboOptions()
-    {
-        AppKey = "xxxxxx",
-        AppSecret = "xxxxxx"
-    });
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddAuthentication()
+            .AddWeibo(WeiboOptions =>
+            {
+                WeiboOptions.Appkey = Configuration["Authentication:Weibo:Appkey"];
+                WeiboOptions.AppSecret = Configuration["Authentication:Weibo:AppSecret"];
+            })
 }
 ```
 

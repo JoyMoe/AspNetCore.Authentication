@@ -1,20 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using JoyMoe.AspNetCore.Authentication.Weibo;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNetCore.Builder
+namespace JoyMoe.AspNetCore.Authentication.Weibo
 {
     public class WeiboOptions : OAuthOptions
     {
         public WeiboOptions()
         {
-            AuthenticationScheme = WeiboDefaults.AuthenticationScheme;
-            DisplayName = AuthenticationScheme;
-            ClaimsIssuer = WeiboDefaults.Issuer;
-            CallbackPath = new PathString(WeiboDefaults.CallbackPath);
-
-            AuthorizationEndpoint = WeiboDefaults.AuthorizationEndpoint;
-            TokenEndpoint = WeiboDefaults.TokenEndpoint;           
-            UserInformationEndpoint = WeiboDefaults.UserInformationEndpoint;
+            CallbackPath = new PathString("/signin-weibo");
+			AuthorizationEndpoint = WeiboDefaults.AuthorizationEndpoint;
+            TokenEndpoint = WeiboDefaults.TokenEndpoint;
+			UserInformationEndpoint = WeiboDefaults.UserInformationEndpoint;
 
             Scope.Add("email");
         }

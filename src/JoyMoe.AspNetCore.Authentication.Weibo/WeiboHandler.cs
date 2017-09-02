@@ -1,23 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Authentication.OAuth;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http.Authentication;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 
 namespace JoyMoe.AspNetCore.Authentication.Weibo
 {
     public class WeiboHandler : OAuthHandler<WeiboOptions>
     {
-        public WeiboHandler(HttpClient client) : base(client) { }
+		public WeiboHandler(IOptionsMonitor<WeiboOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
+            : base(options, logger, encoder, clock)
+        { }
 
-        protected override async Task<AuthenticationTicket> CreateTicketAsync(ClaimsIdentity identity, AuthenticationProperties properties, OAuthTokenResponse tokens)
-        {
+		protected override async Task<AuthenticationTicket> CreateTicketAsync(
+			ClaimsIdentity identity,
+			AuthenticationProperties properties,
+			OAuthTokenResponse tokens)
+		{
             var queryString = new Dictionary<string, string>()
             {
                 {"access_token",tokens.AccessToken },
@@ -84,13 +92,11 @@ namespace JoyMoe.AspNetCore.Authentication.Weibo
                 identity.AddClaim(new Claim("urn:weibo:location", location, ClaimValueTypes.String, Options.ClaimsIssuer));
             }
 
-            var principal = new ClaimsPrincipal(identity);
-            var ticket = new AuthenticationTicket(principal, properties, Options.AuthenticationScheme);
+			var context = new OAuthCreatingTicketContext(new ClaimsPrincipal(identity), properties, Context, Scheme, Options, Backchannel, tokens, payload);
+			context.RunClaimActions();
 
-            var context = new OAuthCreatingTicketContext(ticket, Context, Options, Backchannel, tokens);
-            await Options.Events.CreatingTicket(context);
-
-            return context.Ticket;
+			await Events.CreatingTicket(context);
+			return new AuthenticationTicket(context.Principal, context.Properties, Scheme.Name);
         }
 
         protected override string FormatScope()
