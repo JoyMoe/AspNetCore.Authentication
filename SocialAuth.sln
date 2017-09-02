@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yamool.AspNetCore.Authentication.Tencent", "src\Yamool.AspNetCore.Authentication.Tencent\Yamool.AspNetCore.Authentication.Tencent.csproj", "{65971032-3E2E-4E78-A149-9F477324DB92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyMoe.AspNetCore.Authentication.QQ", "src\JoyMoe.AspNetCore.Authentication.QQ\JoyMoe.AspNetCore.Authentication.QQ.csproj", "{65971032-3E2E-4E78-A149-9F477324DB92}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yamool.AspNetCore.Authentication.Weibo", "src\Yamool.AspNetCore.Authentication.Weibo\Yamool.AspNetCore.Authentication.Weibo.csproj", "{AE9EFD1D-7F8B-4703-9F81-04FDEAF89AB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyMoe.AspNetCore.Authentication.Weibo", "src\JoyMoe.AspNetCore.Authentication.Weibo\JoyMoe.AspNetCore.Authentication.Weibo.csproj", "{AE9EFD1D-7F8B-4703-9F81-04FDEAF89AB0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{89518569-16DD-4DF6-882D-1E32DFEB3114}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mvc.Client", "samples\Mvc.Client\Mvc.Client.csproj", "{757EC0CB-17F6-4872-B2E1-EAF7EE3F8191}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yamool.AspNetCore.Authentication.WeChat", "src\Yamool.AspNetCore.Authentication.WeChat\Yamool.AspNetCore.Authentication.WeChat.csproj", "{06F02C40-EF78-45EE-AEEA-802D6CF3817D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyMoe.AspNetCore.Authentication.Weixin", "src\JoyMoe.AspNetCore.Authentication.Weixin\JoyMoe.AspNetCore.Authentication.Weixin.csproj", "{06F02C40-EF78-45EE-AEEA-802D6CF3817D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yamool.AspNetCore.Authentication.Baidu", "src\Yamool.AspNetCore.Authentication.Baidu\Yamool.AspNetCore.Authentication.Baidu.csproj", "{B347E717-F160-459E-8291-A9F291EAE410}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyMoe.AspNetCore.Authentication.Baidu", "src\JoyMoe.AspNetCore.Authentication.Baidu\JoyMoe.AspNetCore.Authentication.Baidu.csproj", "{B347E717-F160-459E-8291-A9F291EAE410}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

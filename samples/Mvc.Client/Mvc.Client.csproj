@@ -23,7 +23,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0-msbuild3-final" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Yamool.AspNetCore.Authentication.WeChat\Yamool.AspNetCore.Authentication.WeChat.csproj" />
-    <ProjectReference Include="..\..\src\Yamool.AspNetCore.Authentication.Weibo\Yamool.AspNetCore.Authentication.Weibo.csproj" />
+    <ProjectReference Include="..\..\src\JoyMoe.AspNetCore.Authentication.Weixin\JoyMoe.AspNetCore.Authentication.Weixin.csproj" />
+    <ProjectReference Include="..\..\src\JoyMoe.AspNetCore.Authentication.Weibo\JoyMoe.AspNetCore.Authentication.Weibo.csproj" />
   </ItemGroup>
 </Project>
