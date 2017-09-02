@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>ASP.NET Core middleware that enables an application to support Weibo's OAuth authentication workflow.</Description>
+    <Description>ASP.NET Core middleware that enables an application to support Weixin's OAuth authentication workflow.</Description>
     <TargetFramework>netstandard2.0</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -9,11 +9,11 @@
     <PackOnBuild>true</PackOnBuild>
     <PackageVersion>2.0.0</PackageVersion>
     <Authors>Chino Chang &lt;chino@joymoe.com&gt;</Authors>
+    <PackageId>JoyMoe.AspNetCore.Authentication.Weixin</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OAuth" Version="2.0.0" />
-    <PackageReference Include="NuGet.Build.Packaging" Version="0.1.276" />
   </ItemGroup>
   
 </Project>
