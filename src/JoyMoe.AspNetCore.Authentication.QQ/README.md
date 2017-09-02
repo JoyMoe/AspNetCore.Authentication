@@ -12,12 +12,14 @@ QQ帐号登录
 ### Startup.cs
 
 ```c#
-public void Configure(IApplicationBuilder app){
-    app.UseQQAuthentication(new QQOptions()
-    {
-        AppId = "xxxxxx",
-        AppKey = "xxxxxx"
-    });
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddAuthentication()
+            .AddQQ(QQOptions =>
+            {
+                QQOptions.Appkey = Configuration["Authentication:QQ:Appkey"];
+                QQOptions.SecretKey = Configuration["Authentication:QQ:SecretKey"];
+            })
 }
 ```
 

@@ -1,21 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
-using JoyMoe.AspNetCore.Authentication.QQ;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNetCore.Builder
+namespace JoyMoe.AspNetCore.Authentication.QQ
 {
     public class QQOptions : OAuthOptions
     {
         public QQOptions()
         {
-            AuthenticationScheme = QQDefaults.AuthenticationScheme;
-            DisplayName = AuthenticationScheme;
-            ClaimsIssuer = QQDefaults.Issuer;
-            CallbackPath = new PathString(QQDefaults.CallbackPath);
-
-            AuthorizationEndpoint = QQDefaults.AuthorizationEndpoint;
-            TokenEndpoint = QQDefaults.TokenEndpoint;
+			CallbackPath = new PathString("/signin-qq");
+			AuthorizationEndpoint = QQDefaults.AuthorizationEndpoint;
+			TokenEndpoint = QQDefaults.TokenEndpoint;
             OpenIdEndpoint = QQDefaults.OpenIdEndpoint;
-            UserInformationEndpoint = QQDefaults.UserInformationEndpoint;
+			UserInformationEndpoint = QQDefaults.UserInformationEndpoint;
 
             Scope.Add("get_user_info");
         }

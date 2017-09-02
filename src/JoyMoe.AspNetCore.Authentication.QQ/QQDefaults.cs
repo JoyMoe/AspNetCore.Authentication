@@ -1,20 +1,17 @@
-﻿namespace YJoyMoe.AspNetCore.AuthenticationTQQ
+﻿namespace JoyMoe.AspNetCore.Authentication.QQ
 {
     public static class QQDefaults
     {
         public const string AuthenticationScheme = "QQ";
 
-        public const string CallbackPath = "/signin-qq";
+		public static readonly string DisplayName = "QQ";
 
-        public const string Issuer = "QQ";
+		public static readonly string AuthorizationEndpoint = "https://graph.qq.com/oauth2.0/authorize";
 
-        public const string AuthorizationEndpoint = "https://graph.qq.com/oauth2.0/authorize";
+		public static readonly string TokenEndpoint = "https://graph.qq.com/oauth2.0/token";
 
-        public const string TokenEndpoint = "https://graph.qq.com/oauth2.0/token";
+        public static readonly string OpenIdEndpoint = "https://graph.qq.com/oauth2.0/me";
 
-        public const string OpenIdEndpoint = "https://graph.qq.com/oauth2.0/me";
-
-        public const string UserInformationEndpoint = "https://graph.qq.com/user/get_user_info";
-
+		public static readonly string UserInformationEndpoint = "https://graph.qq.com/user/get_user_info";
     }
 }

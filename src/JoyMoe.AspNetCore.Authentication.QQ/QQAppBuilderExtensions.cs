@@ -7,44 +7,27 @@ namespace Microsoft.AspNetCore.Builder
     public static class QQAppBuilderExtensions
     {
         /// <summary>
-        ///  Adds the <see cref="QQMiddleware"/> middleware to the specified <see cref="IApplicationBuilder"/>,
-        ///  which enables QQ authentication capabilities.
+        ///  UseQQAuthentication is obsolete. Configure QQ authentication with AddAuthentication().AddQQ in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.
         /// </summary>
         /// <param name="app"></param>
         /// <param name="options"></param>
-        /// <returns></returns>
-        public static IApplicationBuilder UseQQAuthentication(this IApplicationBuilder app, QQOptions options)
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+		[Obsolete("UseQQAuthentication is obsolete. Configure QQ authentication with AddAuthentication().AddQQ in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.", error: true)]
+		public static IApplicationBuilder UseQQAuthentication(this IApplicationBuilder app, QQOptions options)
         {
-            if (app == null)
-            {
-                throw new ArgumentNullException(nameof(app));
-            }
-            return app.UseMiddleware<QQMiddleware>(Options.Create(options));
+            throw new NotSupportedException("This method is no longer supported, see https://go.microsoft.com/fwlink/?linkid=845470");
         }
 
         /// <summary>
-        /// Adds the <see cref="QQMiddleware"/> middleware to the specified <see cref="IApplicationBuilder"/>,
-        /// which enables QQ authentication capabilities.
+        /// UseQQAuthentication is obsolete. Configure QQ authentication with AddAuthentication().AddQQ in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.
         /// </summary>
         /// <param name="app"></param>
         /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static IApplicationBuilder UseQQAuthentication(this IApplicationBuilder app, Action<QQOptions> configuration)
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+		[Obsolete("UseQQAuthentication is obsolete. Configure QQ authentication with AddAuthentication().AddQQ in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.", error: true)]
+		public static IApplicationBuilder UseQQAuthentication(this IApplicationBuilder app, Action<QQOptions> configuration)
         {
-            if (app == null)
-            {
-                throw new ArgumentNullException(nameof(app));
-            }
-
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
-
-            var options = new QQOptions();
-            configuration(options);
-
-            return app.UseMiddleware<QQMiddleware>(Options.Create(options));
+            throw new NotSupportedException("This method is no longer supported, see https://go.microsoft.com/fwlink/?linkid=845470");
         }
     }
 }
