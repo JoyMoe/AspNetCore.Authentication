@@ -1,50 +1,32 @@
 ﻿using System;
-using Microsoft.Extensions.Options;
 using JoyMoe.AspNetCore.Authentication.Baidu;
 
 namespace Microsoft.AspNetCore.Builder
 {
-    public static class BaiduAppBuilderExtensions
-    {
-        /// <summary>
-        ///  Adds the <see cref="BaiduMiddleware"/> middleware to the specified <see cref="IApplicationBuilder"/>,
-        ///  which enables Weibo authentication capabilities.
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public static IApplicationBuilder UseBaiduAuthentication(this IApplicationBuilder app, BaiduOptions options)
-        {
-            if (app == null)
-            {
-                throw new ArgumentNullException(nameof(app));
-            }
-            return app.UseMiddleware<BaiduMiddleware>(Options.Create(options));
-        }
+	public static class BaiduAppBuilderExtensions
+	{
+		/// <summary>
+		///  UseBaiduAuthentication is obsolete. Configure Baidu authentication with AddAuthentication().AddBaidu in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.
+		/// </summary>
+		/// <param name="app"></param>
+		/// <param name="options"></param>
+		/// <returns>A reference to this instance after the operation has completed.</returns>
+		[Obsolete("UseBaiduAuthentication is obsolete. Configure Baidu authentication with AddAuthentication().AddBaidu in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.", error: true)]
+		public static IApplicationBuilder UseBaiduAuthentication(this IApplicationBuilder app, BaiduOptions options)
+		{
+			throw new NotSupportedException("This method is no longer supported, see https://go.microsoft.com/fwlink/?linkid=845470");
+		}
 
-        /// <summary>
-        /// Adds the <see cref="BaiduMiddleware"/> middleware to the specified <see cref="IApplicationBuilder"/>,
-        /// which enables Weibo authentication capabilities.
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static IApplicationBuilder UseBaiduAuthentication(this IApplicationBuilder app, Action<BaiduOptions> configuration)
-        {
-            if (app == null)
-            {
-                throw new ArgumentNullException(nameof(app));
-            }
-
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
-
-            var options = new BaiduOptions();
-            configuration(options);
-
-            return app.UseMiddleware<BaiduMiddleware>(Options.Create(options));
-        }
-    }
+		/// <summary>
+		/// UseBaiduAuthentication is obsolete. Configure Baidu authentication with AddAuthentication().AddBaidu in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.
+		/// </summary>
+		/// <param name="app"></param>
+		/// <param name="configuration"></param>
+		/// <returns>A reference to this instance after the operation has completed.</returns>
+		[Obsolete("UseBaiduAuthentication is obsolete. Configure Baidu authentication with AddAuthentication().AddBaidu in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.", error: true)]
+		public static IApplicationBuilder UseBaiduAuthentication(this IApplicationBuilder app, Action<BaiduOptions> configuration)
+		{
+			throw new NotSupportedException("This method is no longer supported, see https://go.microsoft.com/fwlink/?linkid=845470");
+		}
+	}
 }

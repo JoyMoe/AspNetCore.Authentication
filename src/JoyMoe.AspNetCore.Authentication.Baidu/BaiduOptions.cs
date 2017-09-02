@@ -1,44 +1,42 @@
-﻿using Microsoft.AspNetCore.Http;
-using JoyMoe.AspNetCore.Authentication.Baidu;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNetCore.Builder
+namespace JoyMoe.AspNetCore.Authentication.Baidu
 {
-    public class BaiduOptions : OAuthOptions
-    {
-        public BaiduOptions()
-        {
-            AuthenticationScheme = BaiduDefaults.AuthenticationScheme;
-            DisplayName = AuthenticationScheme;
-            ClaimsIssuer = BaiduDefaults.Issuer;
-            CallbackPath = new PathString(BaiduDefaults.CallbackPath);
+	public class BaiduOptions : OAuthOptions
+	{
+		public BaiduOptions()
+		{
+			CallbackPath = new PathString("/signin-baidu");
+			AuthorizationEndpoint = BaiduDefaults.AuthorizationEndpoint;
+			TokenEndpoint = BaiduDefaults.TokenEndpoint;
+			UserInformationEndpoint = BaiduDefaults.UserInformationEndpoint;
+		}
 
-            AuthorizationEndpoint = BaiduDefaults.AuthorizationEndpoint;
-            TokenEndpoint = BaiduDefaults.TokenEndpoint;           
-            UserInformationEndpoint = BaiduDefaults.UserInformationEndpoint;          
-        }  
-        
-        public string Appkey
-        {
-            get
-            {
-                return ClientId;
-            }
-            set
-            {
-                ClientId = value;
-            }
-        }
+		public string Appkey
+		{
+			get
+			{
+				return ClientId;
+			}
+			set
+			{
+				ClientId = value;
+			}
+		}
 
-        public string SecretKey
-        {
-            get
-            {
-                return ClientSecret;
-            }
-            set
-            {
-                ClientSecret = value;
-            }
-        }
-    }
+		public string SecretKey
+		{
+			get
+			{
+				return ClientSecret;
+			}
+			set
+			{
+				ClientSecret = value;
+			}
+		}
+	}
 }
