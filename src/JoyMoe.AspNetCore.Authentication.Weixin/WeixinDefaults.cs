@@ -1,17 +1,16 @@
-﻿namespace YJoyMoe.AspNetCore.AuthenticationWWeixin
+﻿namespace JoyMoe.AspNetCore.Authentication.Weixin
 {
     public static class WeixinDefaults
     {
+
         public const string AuthenticationScheme = "Weixin";
 
-        public const string CallbackPath = "/signin-Weixin";
+		public static readonly string DisplayName = "Weixin";
 
-        public const string Issuer = "Weixin";
+		public static readonly string AuthorizationEndpoint = "https://open.weixin.qq.com/connect/qrconnect";
 
-        public const string AuthorizationEndpoint = "https://open.weixin.qq.com/connect/qrconnect";
+		public static readonly string TokenEndpoint = "https://api.weixin.qq.com/sns/oauth2/access_token";
 
-        public const string TokenEndpoint = "https://api.weixin.qq.com/sns/oauth2/access_token";
-
-        public const string UserInformationEndpoint = "https://api.weixin.qq.com/sns/userinfo";
+		public static readonly string UserInformationEndpoint = "https://api.weixin.qq.com/sns/userinfo";
     }
 }

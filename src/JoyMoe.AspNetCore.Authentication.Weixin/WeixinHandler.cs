@@ -1,24 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Claims;
+using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 
 namespace JoyMoe.AspNetCore.Authentication.Weixin
 {
     public class WeixinHandler : OAuthHandler<WeixinOptions>
     {
-        public WeixinHandler(HttpClient client) : base(client) { }
+		public WeixinHandler(IOptionsMonitor<WeixinOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
+            : base(options, logger, encoder, clock)
+        { }
 
-        protected override async Task<AuthenticationTicket> CreateTicketAsync(ClaimsIdentity identity, AuthenticationProperties properties, OAuthTokenResponse tokens)
-        {
+		protected override async Task<AuthenticationTicket> CreateTicketAsync(
+			ClaimsIdentity identity,
+			AuthenticationProperties properties,
+			OAuthTokenResponse tokens)
+		{
             var queryString = new Dictionary<string, string>()
             {
                 {"access_token",tokens.AccessToken },
@@ -94,13 +101,11 @@ namespace JoyMoe.AspNetCore.Authentication.Weixin
                 identity.AddClaim(new Claim("urn:weixin:headimgurl", headimgurl, ClaimValueTypes.String, Options.ClaimsIssuer));
             }
 
-            var principal = new ClaimsPrincipal(identity);
-            var ticket = new AuthenticationTicket(principal, properties, Options.AuthenticationScheme);
+			var context = new OAuthCreatingTicketContext(new ClaimsPrincipal(identity), properties, Context, Scheme, Options, Backchannel, tokens, payload);
+			context.RunClaimActions();
 
-            var context = new OAuthCreatingTicketContext(ticket, Context, Options, Backchannel, tokens);
-
-            await Options.Events.CreatingTicket(context);
-            return context.Ticket;
+			await Events.CreatingTicket(context);
+			return new AuthenticationTicket(context.Principal, context.Properties, Scheme.Name);
         }
 
         protected override async Task<OAuthTokenResponse> ExchangeCodeAsync(string code, string redirectUri)

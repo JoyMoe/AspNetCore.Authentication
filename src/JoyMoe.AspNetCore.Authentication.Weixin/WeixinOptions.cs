@@ -1,20 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using JoyMoe.AspNetCore.Authentication.Weixin;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNetCore.Builder
+namespace JoyMoe.AspNetCore.Authentication.Weixin
 {
     public class WeixinOptions : OAuthOptions
     {
         public WeixinOptions()
         {
-            AuthenticationScheme = WeixinDefaults.AuthenticationScheme;
-            DisplayName = AuthenticationScheme;
-            ClaimsIssuer = WeixinDefaults.Issuer;
-            CallbackPath = new PathString(WeixinDefaults.CallbackPath);
-
-            AuthorizationEndpoint = WeixinDefaults.AuthorizationEndpoint;
+            CallbackPath = new PathString("/signin-weixin");
+			AuthorizationEndpoint = WeixinDefaults.AuthorizationEndpoint;
             TokenEndpoint = WeixinDefaults.TokenEndpoint;
-            UserInformationEndpoint = WeixinDefaults.UserInformationEndpoint;
+			UserInformationEndpoint = WeixinDefaults.UserInformationEndpoint;
 
             Scope.Add("snsapi_login");
             Scope.Add("snsapi_userinfo");

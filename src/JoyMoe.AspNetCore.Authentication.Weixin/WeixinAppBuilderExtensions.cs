@@ -7,44 +7,27 @@ namespace Microsoft.AspNetCore.Builder
     public static class WeixinAppBuilderExtensions
     {
         /// <summary>
-        ///  Adds the <see cref="WeixinMiddleware"/> middleware to the specified <see cref="IApplicationBuilder"/>,
-        ///  which enables Weibo authentication capabilities.
+        ///  UseWeixinAuthentication is obsolete. Configure Weixin authentication with AddAuthentication().AddWeixin in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.
         /// </summary>
         /// <param name="app"></param>
         /// <param name="options"></param>
-        /// <returns></returns>
-        public static IApplicationBuilder UseWeixinAuthentication(this IApplicationBuilder app, WeixinOptions options)
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+		[Obsolete("UseWeixinAuthentication is obsolete. Configure Weixin authentication with AddAuthentication().AddWeixin in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.", error: true)]
+		public static IApplicationBuilder UseWeixinAuthentication(this IApplicationBuilder app, WeixinOptions options)
         {
-            if (app == null)
-            {
-                throw new ArgumentNullException(nameof(app));
-            }
-            return app.UseMiddleware<WeixinMiddleware>(Options.Create(options));
+            throw new NotSupportedException("This method is no longer supported, see https://go.microsoft.com/fwlink/?linkid=845470");
         }
 
         /// <summary>
-        /// Adds the <see cref="WeixinMiddleware"/> middleware to the specified <see cref="IApplicationBuilder"/>,
-        /// which enables Weibo authentication capabilities.
+        /// UseWeixinAuthentication is obsolete. Configure Weixin authentication with AddAuthentication().AddWeixin in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.
         /// </summary>
         /// <param name="app"></param>
         /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static IApplicationBuilder UseWeixinAuthentication(this IApplicationBuilder app, Action<WeixinOptions> configuration)
+        /// <returns>A reference to this instance after the operation has completed.</returns>
+		[Obsolete("UseWeixinAuthentication is obsolete. Configure Weixin authentication with AddAuthentication().AddWeixin in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.", error: true)]
+		public static IApplicationBuilder UseWeixinAuthentication(this IApplicationBuilder app, Action<WeixinOptions> configuration)
         {
-            if (app == null)
-            {
-                throw new ArgumentNullException(nameof(app));
-            }
-
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
-
-            var options = new WeixinOptions();
-            configuration(options);
-
-            return app.UseMiddleware<WeixinMiddleware>(Options.Create(options));
+            throw new NotSupportedException("This method is no longer supported, see https://go.microsoft.com/fwlink/?linkid=845470");
         }
     }
 }
