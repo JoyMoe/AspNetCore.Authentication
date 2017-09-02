@@ -15,10 +15,10 @@ QQ帐号登录
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddAuthentication()
-            .AddQQ(QQOptions =>
+            .AddQQ(qqOptions =>
             {
-                QQOptions.Appkey = Configuration["Authentication:QQ:Appkey"];
-                QQOptions.SecretKey = Configuration["Authentication:QQ:SecretKey"];
+                qqOptions.AppId = Configuration["Authentication:QQ:AppId"];
+                qqOptions.AppKey = Configuration["Authentication:QQ:AppKey"];
             })
 }
 ```

@@ -15,10 +15,10 @@
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddAuthentication()
-            .AddWeibo(WeiboOptions =>
+            .AddWeibo(weiboOptions =>
             {
-                WeiboOptions.Appkey = Configuration["Authentication:Weibo:Appkey"];
-                WeiboOptions.AppSecret = Configuration["Authentication:Weibo:AppSecret"];
+                weiboOptions.Appkey = Configuration["Authentication:Weibo:Appkey"];
+                weiboOptions.AppSecret = Configuration["Authentication:Weibo:AppSecret"];
             })
 }
 ```
