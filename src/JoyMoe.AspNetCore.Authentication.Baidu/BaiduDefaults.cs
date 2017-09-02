@@ -4,7 +4,7 @@
 	{
 		public const string AuthenticationScheme = "Baidu";
 
-		public static readonly string DisplayName = "Google";
+		public static readonly string DisplayName = "Baidu";
 
 		public static readonly string AuthorizationEndpoint = "http://openapi.baidu.com/oauth/2.0/authorize";
 
