@@ -12,5 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\JoyMoe.AspNetCore.Authentication.Weibo\JoyMoe.AspNetCore.Authentication.Weibo.csproj" />
+    <ProjectReference Include="..\..\src\JoyMoe.AspNetCore.Authentication.OpenId\JoyMoe.AspNetCore.Authentication.OpenId.csproj" />
   </ItemGroup>
 </Project>

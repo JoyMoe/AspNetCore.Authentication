@@ -37,6 +37,13 @@ namespace SocialSample
 				.AddWeibo(o => {
 					o.AppKey = "515625315";
 					o.AppSecret = "5444909dca07dcd9164c7921cb95af1a";
+				})
+				.AddOpenId(options =>
+				{
+					options.AuthenticationScheme = "StackExchange";
+					options.DisplayName = "StackExchange";
+					options.Authority = new Uri("https://openid.stackexchange.com/");
+					options.CallbackPath = "/signin-stackexchange";
 				});
 		}
 
