@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using System.Web;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http.Features.Authentication;
@@ -235,37 +236,6 @@ namespace JoyMoe.AspNetCore.Authentication.OpenID
 
 		protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
 		{
-			if (string.IsNullOrEmpty(properties.RedirectUri))
-			{
-				properties.RedirectUri = CurrentUri;
-			}
-
-			// OAuth2 10.12 CSRF
-			GenerateCorrelationId(properties);
-
-			var authorizationEndpoint = BuildChallengeUrl(properties, BuildRedirectUri(Options.CallbackPath));
-			var redirectContext = new RedirectContext<OpenIdOptions>(
-				Context, Scheme, Options,
-				properties, authorizationEndpoint);
-			await Events.RedirectToAuthorizationEndpoint(redirectContext);
-		}
-
-		protected virtual string BuildChallengeUrl(AuthenticationProperties properties, string redirectUri)
-		{
-			var parameters = new Dictionary<string, string>
-			{
-				{ "state", Options.StateDataFormat.Protect(properties) },
-				{ "openid.mode", "checkid_setup" },
-				{ "openid.return_to", redirectUri },
-				{ "openid.identity", "http://specs.openid.net/auth/2.0/identifier_select" },
-			};
-			return QueryHelpers.AddQueryString(Options.Authority.ToString(), parameters);
-		}
-
-		protected virtual async Task<bool> HandleUnauthorizedAsync(ChallengeContext context)
-		{
-			var properties = new AuthenticationProperties(context.Properties);
-
 			var configuration = await Options.ConfigurationManager.GetConfigurationAsync(Context.RequestAborted);
 			if (configuration == null)
 			{
@@ -349,9 +319,10 @@ namespace JoyMoe.AspNetCore.Authentication.OpenID
 
 			var address = QueryHelpers.AddQueryString(configuration.AuthenticationEndpoint, message.Parameters);
 
-			Response.Redirect(address);
-
-			return true;
+			var redirectContext = new RedirectContext<OpenIdOptions>(
+				Context, Scheme, Options,
+				properties, address);
+			await Events.RedirectToAuthorizationEndpoint(redirectContext);
 		}
 
 		private async Task<bool> VerifyAssertionAsync(OpenIdMessage message)
