@@ -9,7 +9,7 @@
     <PackOnBuild>true</PackOnBuild>
     <PackageVersion>2.0.0</PackageVersion>
     <Authors>Chino Chang &lt;chino@joymoe.com&gt;</Authors>
-    <PackageId>JoyMoe.AspNetCore.Authentication.Baidu</PackageId>
+    <PackageId>JoyMoe.AspNetCore.Authentication.OpenId</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

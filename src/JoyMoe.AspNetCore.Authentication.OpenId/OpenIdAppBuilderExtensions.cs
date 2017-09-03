@@ -15,7 +15,7 @@ namespace Microsoft.AspNetCore.Builder
     /// Exposes convenient extensions that can be used to add an instance
     /// of the OpenID authentication middleware in an ASP.NET Core pipeline.
     /// </summary>
-    public static class OpenIdExtensions
+    public static class OpenIdAppBuilderExtensions
     {
         /// <summary>
         /// UseOpenIdAuthentication is obsolete. Configure OpenId authentication with AddAuthentication().AddOpenId in ConfigureServices. See https://go.microsoft.com/fwlink/?linkid=845470 for more details.
