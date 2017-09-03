@@ -10,7 +10,9 @@ using Microsoft.IdentityModel.Protocols;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public class OpenIdPostConfigureOptions : IPostConfigureOptions<OpenIdOptions>
+    public class OpenIdPostConfigureOptions<TOptions, THandler> : IPostConfigureOptions<TOptions>
+        where TOptions : OpenIdOptions, new()
+        where THandler : OpenIdHandler<TOptions>
     {
         private readonly IDataProtectionProvider _dp;
 
@@ -24,7 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="name">The name of the options instance being configured.</param>
         /// <param name="options">The options instance to configure.</param>
-        public void PostConfigure(string name, OpenIdOptions options)
+        public void PostConfigure(string name, TOptions options)
         {
             options.DataProtectionProvider = options.DataProtectionProvider ?? _dp;
 

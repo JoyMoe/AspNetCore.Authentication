@@ -20,6 +20,6 @@ namespace Microsoft.Extensions.DependencyInjection
 			=> builder.AddSteam(authenticationScheme, SteamDefaults.DisplayName, configuration);
 
 		public static AuthenticationBuilder AddSteam(this AuthenticationBuilder builder, string authenticationScheme, string displayName, Action<SteamOptions> configuration)
-		    => builder.AddScheme<SteamOptions, SteamHandler>(authenticationScheme, displayName, configuration);
+            => builder.AddOpenId<SteamOptions, SteamHandler>(authenticationScheme, displayName, configuration);
     }
 }
