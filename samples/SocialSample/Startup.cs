@@ -38,6 +38,7 @@ namespace SocialSample
 					o.AppKey = "515625315";
 					o.AppSecret = "5444909dca07dcd9164c7921cb95af1a";
 				})
+				.AddSteam()
 				.AddOpenId(options =>
 				{
 					options.AuthenticationScheme = "StackExchange";
