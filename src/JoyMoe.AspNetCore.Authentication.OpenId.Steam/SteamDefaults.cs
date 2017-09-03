@@ -27,7 +27,7 @@ namespace JoyMoe.AspNetCore.Authentication.OpenID.Steam
         /// <summary>
         /// Gets the default value associated with <see cref="OpenIdOptions.Authority"/>.
         /// </summary>
-        public static readonly string Authority = "https://steamcommunity.com/openid/login";
+        public static readonly string Authority = "https://steamcommunity.com/openid";
 
         /// <summary>
         /// Gets the default value associated with <see cref="SteamOptions.UserInformationEndpoint"/>.
