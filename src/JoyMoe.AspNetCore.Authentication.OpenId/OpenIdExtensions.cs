@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Options;
 using JoyMoe.AspNetCore.Authentication.OpenID;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -26,6 +28,9 @@ namespace Microsoft.Extensions.DependencyInjection
 		}
 
 		public static AuthenticationBuilder AddOpenId(this AuthenticationBuilder builder, string authenticationScheme, string displayName, Action<OpenIdOptions> configuration)
-		    => builder.AddScheme<OpenIdOptions, OpenIdHandler<OpenIdOptions>>(authenticationScheme, displayName, configuration);
+        {
+            builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IPostConfigureOptions<OpenIdOptions>, OpenIdPostConfigureOptions>());
+            return builder.AddRemoteScheme<OpenIdOptions, OpenIdHandler<OpenIdOptions>>(authenticationScheme, displayName, configuration);
+        }
 	}
 }
