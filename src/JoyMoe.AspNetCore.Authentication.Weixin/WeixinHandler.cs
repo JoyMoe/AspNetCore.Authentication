@@ -59,8 +59,8 @@ namespace JoyMoe.AspNetCore.Authentication.Weixin
         {
             var queryString = new Dictionary<string, string>()
             {
-                {"appid",Options.AppId },
-                {"secret",Options.AppSecret },
+                {"appid",Options.ClientId },
+                {"secret",Options.ClientSecret },
                 {"code",code },
                 {"grant_type","authorization_code" }
             };
@@ -94,7 +94,7 @@ namespace JoyMoe.AspNetCore.Authentication.Weixin
                 { "response_type", "code" },
                 { "redirect_uri", redirectUri },
                 { "state", Options.StateDataFormat.Protect(properties) }
-            }
+            };
             return QueryHelpers.AddQueryString(Options.AuthorizationEndpoint, queryString);
         }
 
