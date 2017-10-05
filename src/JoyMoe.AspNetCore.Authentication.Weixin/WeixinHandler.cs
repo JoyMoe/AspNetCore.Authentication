@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -17,15 +15,12 @@ namespace JoyMoe.AspNetCore.Authentication.Weixin
 {
     public class WeixinHandler : OAuthHandler<WeixinOptions>
     {
-		public WeixinHandler(IOptionsMonitor<WeixinOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
+        public WeixinHandler(IOptionsMonitor<WeixinOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
             : base(options, logger, encoder, clock)
         { }
 
-		protected override async Task<AuthenticationTicket> CreateTicketAsync(
-			ClaimsIdentity identity,
-			AuthenticationProperties properties,
-			OAuthTokenResponse tokens)
-		{
+        protected override async Task<AuthenticationTicket> CreateTicketAsync(ClaimsIdentity identity, AuthenticationProperties properties, OAuthTokenResponse tokens)
+        {
             var queryString = new Dictionary<string, string>()
             {
                 {"access_token",tokens.AccessToken },
@@ -52,60 +47,12 @@ namespace JoyMoe.AspNetCore.Authentication.Weixin
                 throw new HttpRequestException("An error occurred when retrieving user information.");
             }
 
-            var unionid = WeixinHelper.GetUnionid(payload);
-            if (!string.IsNullOrEmpty(unionid))
-            {
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, unionid, ClaimValueTypes.String, Options.ClaimsIssuer));
-            }
+            var principal = new ClaimsPrincipal(identity);
+            var context = new OAuthCreatingTicketContext(principal, properties, Context, Scheme, Options, Backchannel, tokens, payload);
+            context.RunClaimActions(payload);
 
-            var nickname = WeixinHelper.GetNickname(payload);
-            if (!string.IsNullOrEmpty(nickname))
-            {
-                identity.AddClaim(new Claim(ClaimTypes.Name, nickname, ClaimValueTypes.String, Options.ClaimsIssuer));
-            }
-
-            var sex = WeixinHelper.GetSex(payload);
-            if (!string.IsNullOrEmpty(sex))
-            {
-                identity.AddClaim(new Claim(ClaimTypes.Gender, sex, ClaimValueTypes.String, Options.ClaimsIssuer));
-            }
-
-            var country = WeixinHelper.GetCountry(payload);
-            if (!string.IsNullOrEmpty(country))
-            {
-                identity.AddClaim(new Claim(ClaimTypes.Country, country, ClaimValueTypes.String, Options.ClaimsIssuer));
-            }
-
-            var openid = WeixinHelper.GetOpenId(payload);
-            if (!string.IsNullOrEmpty(openid))
-            {
-                identity.AddClaim(new Claim("urn:weixin:openid", openid, ClaimValueTypes.String, Options.ClaimsIssuer));
-            }
-
-
-            var province = WeixinHelper.GetProvince(payload);
-            if (!string.IsNullOrEmpty(province))
-            {
-                identity.AddClaim(new Claim("urn:weixin:province", province, ClaimValueTypes.String, Options.ClaimsIssuer));
-            }
-
-            var city = WeixinHelper.GetCity(payload);
-            if (!string.IsNullOrEmpty(city))
-            {
-                identity.AddClaim(new Claim("urn:weixin:city", city, ClaimValueTypes.String, Options.ClaimsIssuer));
-            }
-
-            var headimgurl = WeixinHelper.GetHeadimgUrl(payload);
-            if (!string.IsNullOrEmpty(headimgurl))
-            {
-                identity.AddClaim(new Claim("urn:weixin:headimgurl", headimgurl, ClaimValueTypes.String, Options.ClaimsIssuer));
-            }
-
-			var context = new OAuthCreatingTicketContext(new ClaimsPrincipal(identity), properties, Context, Scheme, Options, Backchannel, tokens, payload);
-			context.RunClaimActions();
-
-			await Events.CreatingTicket(context);
-			return new AuthenticationTicket(context.Principal, context.Properties, Scheme.Name);
+            await Options.Events.CreatingTicket(context);
+            return new AuthenticationTicket(context.Principal, context.Properties, Scheme.Name);
         }
 
         protected override async Task<OAuthTokenResponse> ExchangeCodeAsync(string code, string redirectUri)
@@ -121,39 +68,36 @@ namespace JoyMoe.AspNetCore.Authentication.Weixin
             var response = await Backchannel.GetAsync(endpoint);
             if (!response.IsSuccessStatusCode)
             {
-                var error = "OAuth token endpoint failure: " + await response.Content.ReadAsStringAsync();
-                return OAuthTokenResponse.Failed(new Exception(error));
-            }
-            var payload = JObject.Parse(await response.Content.ReadAsStringAsync());
+                Logger.LogError($"An error occurred while retrieving the user information: the remote server returned a " +
+                  $"{response.StatusCode} response with the following payload: {await response.Content.ReadAsStringAsync()}.");
 
-            // checking a remote server error response.
+                return OAuthTokenResponse.Failed(new Exception("An error occurred while retrieving an access token."));
+            }
+
+            var payload = JObject.Parse(await response.Content.ReadAsStringAsync());
             if (!string.IsNullOrEmpty(payload.Value<string>("errcode")))
             {
-                var error = "OAuth token endpoint failure: " + payload.ToString();
-                return OAuthTokenResponse.Failed(new Exception(error));
+                Logger.LogError($"An error occurred while retrieving the user information: the remote server returned a " +
+                  $"{response.StatusCode} response with the following payload: {await response.Content.ReadAsStringAsync()}.");
+
+                return OAuthTokenResponse.Failed(new Exception("An error occurred while retrieving an access token."));
             }
             return OAuthTokenResponse.Success(payload);
         }
 
         protected override string BuildChallengeUrl(AuthenticationProperties properties, string redirectUri)
         {
-            var scope = FormatScope();
-            var state = Options.StateDataFormat.Protect(properties);
-
             var queryString = new Dictionary<string, string>()
             {
-                {"appid",Options.AppId },
-                { "scope", scope },
+                { "appid", Options.ClientId },
+                { "scope", FormatScope() },
                 { "response_type", "code" },
                 { "redirect_uri", redirectUri },
-                { "state", state }
-            };
+                { "state", Options.StateDataFormat.Protect(properties) }
+            }
             return QueryHelpers.AddQueryString(Options.AuthorizationEndpoint, queryString);
         }
 
-        protected override string FormatScope()
-        {
-            return string.Join(",", Options.Scope);
-        }
+        protected override string FormatScope() => string.Join(",", Options.Scope);
     }
 }

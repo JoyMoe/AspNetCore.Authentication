@@ -9,43 +9,25 @@ namespace JoyMoe.AspNetCore.Authentication.Weixin
     {
         public WeixinOptions()
         {
-            CallbackPath = new PathString("/signin-weixin");
-			AuthorizationEndpoint = WeixinDefaults.AuthorizationEndpoint;
+            ClaimsIssuer = WeixinDefaults.Issuer;
+            CallbackPath = new PathString(WeixinDefaults.CallbackPath);
+
+            AuthorizationEndpoint = WeixinDefaults.AuthorizationEndpoint;
             TokenEndpoint = WeixinDefaults.TokenEndpoint;
-			UserInformationEndpoint = WeixinDefaults.UserInformationEndpoint;
+            UserInformationEndpoint = WeixinDefaults.UserInformationEndpoint;
 
             Scope.Add("snsapi_login");
             Scope.Add("snsapi_userinfo");
-        }
 
-        /// <summary>
-        /// The App Id.
-        /// </summary>
-        public string AppId
-        {
-            get
-            {
-                return ClientId;
-            }
-            set
-            {
-                ClientId = value;
-            }
-        }
-
-        /// <summary>
-        /// The App Secret.
-        /// </summary>
-        public string AppSecret
-        {
-            get
-            {
-                return ClientSecret;
-            }
-            set
-            {
-                ClientSecret = value;
-            }
+            ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "unionid");
+            ClaimActions.MapJsonKey(ClaimTypes.Name, "nickname");
+            ClaimActions.MapJsonKey(ClaimTypes.Gender, "sex");
+            ClaimActions.MapJsonKey(ClaimTypes.Country, "country");
+            ClaimActions.MapJsonKey("urn:weixin:openid", "openid");
+            ClaimActions.MapJsonKey("urn:weixin:province", "province");
+            ClaimActions.MapJsonKey("urn:weixin:city", "city");
+            ClaimActions.MapJsonKey("urn:weixin:headimgurl", "headimgurl");
+            ClaimActions.MapJsonKey("urn:weixin:privilege", "privilege");
         }
     }
 }
