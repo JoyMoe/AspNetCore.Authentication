@@ -5,38 +5,20 @@ using Microsoft.AspNetCore.Http;
 
 namespace JoyMoe.AspNetCore.Authentication.Baidu
 {
-	public class BaiduOptions : OAuthOptions
-	{
-		public BaiduOptions()
-		{
-			CallbackPath = new PathString("/signin-baidu");
-			AuthorizationEndpoint = BaiduDefaults.AuthorizationEndpoint;
-			TokenEndpoint = BaiduDefaults.TokenEndpoint;
-			UserInformationEndpoint = BaiduDefaults.UserInformationEndpoint;
-		}
+    public class BaiduOptions : OAuthOptions
+    {
+        public BaiduOptions()
+        {
+            ClaimsIssuer = BaiduDefaults.Issuer;
+            CallbackPath = new PathString(BaiduDefaults.CallbackPath);
 
-		public string Appkey
-		{
-			get
-			{
-				return ClientId;
-			}
-			set
-			{
-				ClientId = value;
-			}
-		}
+            AuthorizationEndpoint = BaiduDefaults.AuthorizationEndpoint;
+            TokenEndpoint = BaiduDefaults.TokenEndpoint;           
+            UserInformationEndpoint = BaiduDefaults.UserInformationEndpoint;
 
-		public string SecretKey
-		{
-			get
-			{
-				return ClientSecret;
-			}
-			set
-			{
-				ClientSecret = value;
-			}
-		}
-	}
+            ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "uid");
+            ClaimActions.MapJsonKey(ClaimTypes.Name, "uname");
+            ClaimActions.MapJsonKey("urn:baidu:portrait", "portrait");
+        }
+    }
 }
