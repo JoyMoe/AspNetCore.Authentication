@@ -4,14 +4,18 @@
     {
         public const string AuthenticationScheme = "QQ";
 
-		public static readonly string DisplayName = "QQ";
+        public const string DisplayName = "QQ";
 
-		public static readonly string AuthorizationEndpoint = "https://graph.qq.com/oauth2.0/authorize";
+        public const string Issuer = "QQ";
 
-		public static readonly string TokenEndpoint = "https://graph.qq.com/oauth2.0/token";
+        public const string CallbackPath = "/signin-qq";
 
-        public static readonly string OpenIdEndpoint = "https://graph.qq.com/oauth2.0/me";
+        public const string AuthorizationEndpoint = "https://graph.qq.com/oauth2.0/authorize";
 
-		public static readonly string UserInformationEndpoint = "https://graph.qq.com/user/get_user_info";
+        public const string TokenEndpoint = "https://graph.qq.com/oauth2.0/token";
+
+        public const string UserIdentificationEndpoint = "https://graph.qq.com/oauth2.0/me";
+
+        public const string UserInformationEndpoint = "https://graph.qq.com/user/get_user_info";
     }
 }
