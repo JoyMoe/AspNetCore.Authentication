@@ -1,5 +1,6 @@
 ﻿using System;
 using JoyMoe.AspNetCore.Authentication.Baidu;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
